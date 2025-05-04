@@ -1,2 +1,5 @@
 .cursor
 .python-version
+simple_mcp.egg-info
+__pycache__
+build

@@ -1,7 +1,7 @@
 from mcp.server.fastmcp import FastMCP
 import subprocess
-import shlex
 from typing import List, Dict, Optional
+import asyncio
 
 # Create an MCP server
 mcp = FastMCP("TerminalCommand")
@@ -18,24 +18,16 @@ async def run_command(command: str) -> Dict[str, str]:
         Dictionary with stdout, stderr, and return code
     """
     try:
-        args = shlex.split(command)
-        process = subprocess.run(
-            args,
-            capture_output=True,
-            text=True,
-            timeout=30  # 30 second timeout for safety
+        process = await asyncio.create_subprocess_shell(
+            command,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE
         )
-        
+        stdout, stderr = await process.communicate()
         return {
-            "stdout": process.stdout,
-            "stderr": process.stderr,
+            "stdout": stdout.decode(),
+            "stderr": stderr.decode(),
             "return_code": str(process.returncode)
-        }
-    except subprocess.TimeoutExpired:
-        return {
-            "stdout": "",
-            "stderr": "Command timed out after 30 seconds",
-            "return_code": "-1"
         }
     except Exception as e:
         return {
@@ -58,7 +50,7 @@ async def list_files(directory: str = ".") -> Dict[str, List[str]]:
     try:
         result = await run_command(f"ls -la {directory}")
         if result["return_code"] == "0":
-            files = [line for line in result["stdout"].split("\n") if line.strip()]
+            files = [line for line in result["stdout"].split("\n") if line.strip()] 
             return {"files": files}
         else:
             return {"files": [], "error": result["stderr"]}
@@ -66,6 +58,4 @@ async def list_files(directory: str = ".") -> Dict[str, List[str]]:
         return {"files": [], "error": str(e)}
 
 if __name__ == "__main__":
-    # The MCP CLI will automatically detect and run the server
-    # Run with: mcp dev terminal_mcp_server.py
-    pass
+    mcp.run("stdio")
