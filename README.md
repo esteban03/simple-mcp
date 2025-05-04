@@ -24,7 +24,7 @@ The project uses `uv` with `uvx` as the package manager for efficient dependency
 
 ## MCP Integration
 
-Below is an example configuration for running the project with MCP. Update the directory path as needed for your environment:
+Below is an example configuration for running the project with MCP. Update the directory path as needed for your environment. This integration allows you to execute terminal commands directly through MCP, enabling automated project management and script execution.
 
 ```json
 "mcp-commands": {
@@ -32,3 +32,10 @@ Below is an example configuration for running the project with MCP. Update the d
     "args": ["--directory", "/path/to/simple-mcp/", "run", "main.py"]
 }
 ```
+
+## Functionalities & Tools
+
+This project serves as a playground for testing various MCP functionalities. The current include:
+
+- **Terminal Command Execution** - Run terminal commands through MCP integration
+
