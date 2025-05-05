@@ -24,13 +24,33 @@ The project uses `uv` with `uvx` as the package manager for efficient dependency
 
 ## MCP Integration
 
-Below is an example configuration for running the project with MCP. Update the directory path as needed for your environment. This integration allows you to execute terminal commands directly through MCP, enabling automated project management and script execution.
+Below are example configurations for running the project with MCP. Update the directory path as needed for your environment. These integrations allow you to execute terminal commands directly through MCP, enabling automated project management and script execution.
+
+### Local Integration
 
 ```json
 "mcp-commands": {
     "command": "uv",
     "args": ["--directory", "/path/to/simple-mcp/", "run", "main.py"]
 }
+```
+
+### Docker Integration
+
+Add this configuration to your Claude Desktop config file (`claude_desktop_config.json`):
+
+```json
+"mcp-commands-docker": {
+    "command": "/Applications/Docker.app/Contents/Resources/bin/docker",
+    "args": ["run", "-i", "--rm", "--init", "-e", "DOCKER_CONTAINER=true", "simple-mcp"]
+}
+```
+
+Important: You must pre-build the Docker image before running the container:
+
+```bash
+# Build the Docker image
+docker build -t simple-mcp .
 ```
 
 ## Tools
