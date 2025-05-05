@@ -35,15 +35,11 @@ Below is an example configuration for running the project with MCP. Update the d
 
 ## Tools
 
-- **Terminal Command Execution**
-  - Run terminal commands through MCP integration.
-
-- **List Files**
-  - List files in a specified directory via MCP.
+- **Terminal Command Execution:** Run terminal commands through MCP integration.
+- **List Files:** List files in a specified directory via MCP.
 
 ## Resources
 
-- **README Resource Exposure**
-  - Access the contents of the README.md file as an MCP resource. Useful for programmatically retrieving documentation or displaying project information in other tools.
+- **README Resource Exposure:** Access the contents of the README.md file as an MCP resource. Useful for programmatically retrieving documentation or displaying project information in other tools.
 
 
