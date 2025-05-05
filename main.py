@@ -56,6 +56,19 @@ async def list_files(directory: str = ".") -> Dict[str, List[str]]:
             return {"files": [], "error": result["stderr"]}
     except Exception as e:
         return {"files": [], "error": str(e)}
+    
+
+@mcp.resource("file://README.md")
+async def readme() -> str:
+    """
+    Expose the README.md file of the mcp as a resource
+    """
+    try:
+        with open("README.md", "r") as f:
+            return f.read()
+    except Exception as e:
+        return f"Error reading README.md: {str(e)}"
+
 
 if __name__ == "__main__":
     mcp.run("stdio")
